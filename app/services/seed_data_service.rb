@@ -11,7 +11,7 @@ class SeedDataService
   end
 
   def fetch_parks
-    response = self.class.get("/parks", query: { api_key: @nps_api_key })
+    response = self.class.get("/parks", query: { api_key: @nps_api_key, limit: 210 }) # Increase the limit if needed
     if response.success?
       response.parsed_response['data'].each do |park_data|
         latitude = park_data['latitude']
@@ -25,9 +25,18 @@ class SeedDataService
             p.park_code = park_data['parkCode']
           end
 
+          # Ensure multiple images per park
           park_data['images'].each do |image_data|
             park.images.find_or_create_by!(url: image_data['url'], source: 'NPS')
           end
+
+          # Add multiple weather entries per park
+          3.times do
+            fetch_weather(park)
+          end
+
+          # Ensure map is created for each park
+          fetch_map(park)
         else
           puts "Latitude or longitude missing for park: #{park_data['fullName']}"
         end
@@ -67,13 +76,5 @@ class SeedDataService
 
   def seed_all
     fetch_parks
-    Park.all.each do |park|
-      if park.latitude.present? && park.longitude.present?
-        fetch_weather(park)
-        fetch_map(park)
-      else
-        puts "Skipping weather and map fetch for park: #{park.name} due to missing latitude or longitude"
-      end
-    end
   end
 end
