@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_23_180830) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_24_032110) do
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
     t.text "body"
@@ -65,6 +65,60 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_23_180830) do
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
   end
 
+  create_table "images", force: :cascade do |t|
+    t.string "url"
+    t.integer "park_id", null: false
+    t.string "source"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["park_id"], name: "index_images_on_park_id"
+  end
+
+  create_table "maps", force: :cascade do |t|
+    t.integer "park_id", null: false
+    t.string "map_url"
+    t.float "latitude"
+    t.float "longitude"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["park_id"], name: "index_maps_on_park_id"
+  end
+
+  create_table "parks", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.string "location"
+    t.string "park_code"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.float "latitude"
+    t.float "longitude"
+  end
+
+  create_table "weather_reports", force: :cascade do |t|
+    t.float "temperature"
+    t.string "weather_code"
+    t.integer "park_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["park_id"], name: "index_weather_reports_on_park_id"
+  end
+
+  create_table "weathers", force: :cascade do |t|
+    t.integer "park_id", null: false
+    t.float "temperature"
+    t.string "conditions"
+    t.string "forecast"
+    t.date "date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["park_id"], name: "index_weathers_on_park_id"
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "images", "parks"
+  add_foreign_key "maps", "parks"
+  add_foreign_key "weather_reports", "parks"
+  add_foreign_key "weathers", "parks"
 end

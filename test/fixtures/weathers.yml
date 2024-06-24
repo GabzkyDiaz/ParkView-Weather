@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  park: one
+  temperature: 1.5
+  conditions: MyString
+  forecast: MyString
+  date: 2024-06-23
+
+two:
+  park: two
+  temperature: 1.5
+  conditions: MyString
+  forecast: MyString
+  date: 2024-06-23

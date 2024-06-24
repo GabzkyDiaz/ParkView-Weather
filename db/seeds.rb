@@ -7,4 +7,15 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
-AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
+# AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
+
+require_relative '../app/services/seed_data_service'
+
+# Clear existing data
+Park.destroy_all
+Image.destroy_all
+Weather.destroy_all
+Map.destroy_all
+
+# Seed data for other models using the SeedDataService
+SeedDataService.new.seed_all

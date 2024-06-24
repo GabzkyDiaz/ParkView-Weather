@@ -1,0 +1,17 @@
+<h1><%= @park.name %></h1>
+<p><%= @park.description %></p>
+<p>Location: <%= @park.location %></p>
+<h2>Images</h2>
+<ul>
+  <% @park.images.each do |image| %>
+    <li><%= image_tag image.url %></li>
+  <% end %>
+</ul>
+<h2>Weather</h2>
+<ul>
+  <% @park.weathers.each do |weather| %>
+    <li><%= weather.date %>: <%= weather.temperature %>°C, <%= weather.conditions %></li>
+  <% end %>
+</ul>
+<h2>Map</h2>
+<%= image_tag @park.map.map_url %>

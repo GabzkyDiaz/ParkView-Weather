@@ -1,0 +1,7 @@
+<h1>All Parks</h1>
+<%= paginate @parks %>
+<ul>
+  <% @parks.each do |park| %>
+    <li><%= link_to park.name, park_path(park) %></li>
+  <% end %>
+</ul>
