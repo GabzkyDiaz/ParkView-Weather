@@ -1,7 +1,7 @@
 <h1>All Parks</h1>
 
 <%= form_with url: parks_path, method: :get, local: true do %>
-  <%= label_tag :search, "Search for parks by name:" %>
+  <%= label_tag :search, "Search for parks by name or state:" %>
   <%= text_field_tag :search, params[:search] %>
   <%= label_tag :activity_id, "Filter by activity:" %>
   <%= select_tag :activity_id, options_from_collection_for_select(@activities, :id, :name, params[:activity_id]), include_blank: true %>

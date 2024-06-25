@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_25_012308) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_25_130052) do
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
     t.text "body"
@@ -59,25 +59,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_25_012308) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "activities_categories", id: false, force: :cascade do |t|
-    t.integer "activity_id", null: false
-    t.integer "category_id", null: false
-  end
-
-  create_table "activities_parks", id: false, force: :cascade do |t|
-    t.integer "park_id", null: false
-    t.integer "activity_id", null: false
-  end
-
-  create_table "activity_assignments", force: :cascade do |t|
-    t.integer "park_id", null: false
-    t.integer "activity_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["activity_id"], name: "index_activity_assignments_on_activity_id"
-    t.index ["park_id"], name: "index_activity_assignments_on_park_id"
-  end
-
   create_table "admin_users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -88,23 +69,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_25_012308) do
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_admin_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
-  end
-
-  create_table "categories", force: :cascade do |t|
-    t.string "name"
-    t.integer "park_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["park_id"], name: "index_categories_on_park_id"
-  end
-
-  create_table "categorizations", force: :cascade do |t|
-    t.integer "park_id", null: false
-    t.integer "category_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["category_id"], name: "index_categorizations_on_category_id"
-    t.index ["park_id"], name: "index_categorizations_on_park_id"
   end
 
   create_table "images", force: :cascade do |t|
@@ -153,6 +117,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_25_012308) do
     t.datetime "updated_at", null: false
     t.float "latitude"
     t.float "longitude"
+    t.string "full_state_names"
+    t.string "states"
   end
 
   create_table "topics", force: :cascade do |t|
@@ -183,11 +149,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_25_012308) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "activity_assignments", "activities"
-  add_foreign_key "activity_assignments", "parks"
-  add_foreign_key "categories", "parks"
-  add_foreign_key "categorizations", "categories"
-  add_foreign_key "categorizations", "parks"
   add_foreign_key "images", "parks"
   add_foreign_key "maps", "parks"
   add_foreign_key "park_activities", "activities"

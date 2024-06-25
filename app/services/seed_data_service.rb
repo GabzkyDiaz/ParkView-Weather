@@ -40,6 +40,8 @@ class SeedDataService
             p.latitude = latitude
             p.longitude = longitude
             p.park_code = park_data['parkCode']
+            p.states = park_data['states']
+            p.full_state_names = park_data['states'].split(',').map { |abbr| Park.state_full_name(abbr) }.join(', ')
           end
 
           # Ensure multiple images per park
