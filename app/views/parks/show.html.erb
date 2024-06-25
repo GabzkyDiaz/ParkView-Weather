@@ -18,12 +18,13 @@
 <h2>Activities</h2>
 <ul>
   <% @park.activities.each do |activity| %>
-    <li><%= activity.name %></li>
+    <li><%= link_to activity.name, activity_path(activity) %></li>
   <% end %>
 </ul>
 <h2>Topics</h2>
 <ul>
   <% @park.topics.each do |topic| %>
-    <li><%= topic.name %></li>
+    <li><%= link_to topic.name, topic_path(topic) %></li>
   <% end %>
 </ul>
+
