@@ -10,6 +10,14 @@ class Park < ApplicationRecord
   validates :name, presence: true
   validates :location, presence: true
 
+  def self.ransackable_associations(auth_object = nil)
+    ["activities", "images", "map", "park_activities", "park_topics", "topics", "weathers"]
+  end
+
+  def self.ransackable_attributes(auth_object = nil)
+    ["created_at", "description", "full_state_names", "id", "id_value", "latitude", "location", "longitude", "name", "park_code", "states", "updated_at"]
+  end
+
   STATE_ABBREVIATIONS_TO_NAMES = {
     "AL" => "Alabama",
     "AK" => "Alaska",
