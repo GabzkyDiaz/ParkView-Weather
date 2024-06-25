@@ -1,4 +1,11 @@
 <h1>All Parks</h1>
+
+<%= form_with url: parks_path, method: :get, local: true do %>
+  <%= label_tag :search, "Search for parks by name:" %>
+  <%= text_field_tag :search, params[:search] %>
+  <%= submit_tag "Search" %>
+<% end %>
+
 <%= paginate @parks %>
 <ul>
   <% @parks.each do |park| %>
