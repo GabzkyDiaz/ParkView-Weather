@@ -1,6 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Parkview Weather</title>
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
@@ -8,24 +10,23 @@
   <%= stylesheet_link_tag 'application', media: 'all' %>
   <%= javascript_include_tag 'application' %>
 </head>
-
-<body>
-  <header>
-    <nav>
-      <ul>
-        <li><%= link_to 'Home', root_path %></li>
-        <li><%= link_to 'About', about_path %></li>
-        <li><%= link_to 'Activities', activities_path %></li>
-        <li><%= link_to 'Topics', topics_path %></li>
-      </ul>
+<body class="bg-gray-100 text-gray-900">
+  <header class="bg-indigo-600">
+    <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
+      <div class="flex items-center space-x-4">
+        <%= link_to 'Home', root_path, class: "text-white font-semibold hover:text-gray-300" %>
+        <%= link_to 'About', about_path, class: "text-white font-semibold hover:text-gray-300" %>
+        <%= link_to 'Activities', activities_path, class: "text-white font-semibold hover:text-gray-300" %>
+        <%= link_to 'Topics', topics_path, class: "text-white font-semibold hover:text-gray-300" %>
+      </div>
     </nav>
   </header>
 
-  <main>
+  <main class="container mx-auto px-6 py-8">
     <%= yield %>
   </main>
 
-  <footer>
+  <footer class="bg-indigo-600 text-white text-center py-4">
     <p>&copy; 2024 Parkview Weather</p>
   </footer>
 </body>

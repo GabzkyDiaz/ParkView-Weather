@@ -1,30 +1,38 @@
-<h1><%= @park.name %></h1>
-<p><%= @park.description %></p>
-<p>Location: <%= @park.location %></p>
-<h2>Images</h2>
-<ul>
+<h1 class="text-4xl font-bold mb-4"><%= @park.name %></h1>
+<p class="mb-4 text-lg text-gray-700"><%= @park.description %></p>
+<p class="mb-6 text-lg"><strong>Location:</strong> <%= @park.location %></p>
+
+<h2 class="text-2xl font-semibold mb-4">Images</h2>
+<ul class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
   <% @park.images.each do |image| %>
-    <li><%= image_tag image.url %></li>
-  <% end %>
-</ul>
-<h2>Weather</h2>
-<ul>
-  <% @park.weathers.each do |weather| %>
-    <li><%= weather.date %>: <%= weather.temperature %>°C, <%= weather.conditions %></li>
-  <% end %>
-</ul>
-<h2>Map</h2>
-<%= image_tag @park.map.map_url %>
-<h2>Activities</h2>
-<ul>
-  <% @park.activities.each do |activity| %>
-    <li><%= link_to activity.name, activity_path(activity) %></li>
-  <% end %>
-</ul>
-<h2>Topics</h2>
-<ul>
-  <% @park.topics.each do |topic| %>
-    <li><%= link_to topic.name, topic_path(topic) %></li>
+    <li class="flex justify-center">
+      <%= image_tag image.url, class: "w-32 h-32 object-cover rounded-md shadow" %>
+    </li>
   <% end %>
 </ul>
 
+<h2 class="text-2xl font-semibold mb-4">Weather</h2>
+<ul class="mb-6">
+  <% @park.weathers.each do |weather| %>
+    <li class="text-lg text-gray-600"><%= weather.date %>: <%= weather.temperature %>°C, <%= weather.conditions %></li>
+  <% end %>
+</ul>
+
+<h2 class="text-2xl font-semibold mb-4">Map</h2>
+<div class="mb-6 flex justify-center">
+  <%= image_tag @park.map.map_url, class: "w-96 h-72 object-cover rounded-md shadow" %>
+</div>
+
+<h2 class="text-2xl font-semibold mb-4">Activities</h2>
+<ul class="mb-6">
+  <% @park.activities.each do |activity| %>
+    <li class="text-lg text-indigo-600 hover:underline"><%= link_to activity.name, activity_path(activity) %></li>
+  <% end %>
+</ul>
+
+<h2 class="text-2xl font-semibold mb-4">Topics</h2>
+<ul>
+  <% @park.topics.each do |topic| %>
+    <li class="text-lg text-indigo-600 hover:underline"><%= link_to topic.name, topic_path(topic) %></li>
+  <% end %>
+</ul>
