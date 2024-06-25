@@ -1,21 +1,32 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Parkview Weather</title>
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+<head>
+  <title>Parkview Weather</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
+  <%= stylesheet_link_tag 'application', media: 'all' %>
+  <%= javascript_include_tag 'application' %>
+</head>
 
-  <body>
+<body>
+  <header>
     <nav>
-      <%= link_to 'Home', root_path %>
-      <%= link_to 'About', about_path %>
-      <%= link_to 'Parks', parks_path %>
+      <ul>
+        <li><%= link_to 'Home', root_path %></li>
+        <li><%= link_to 'About', about_path %></li>
+        <li><%= link_to 'Activities', activities_path %></li>
+        <li><%= link_to 'Topics', topics_path %></li>
+      </ul>
     </nav>
+  </header>
 
+  <main>
     <%= yield %>
-  </body>
+  </main>
+
+  <footer>
+    <p>&copy; 2024 Parkview Weather</p>
+  </footer>
+</body>
 </html>

@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get 'topics/index'
+  get 'topics/show'
+  get 'activities/index'
+  get 'activities/show'
   root 'parks#index'
 
 
@@ -7,6 +11,8 @@ Rails.application.routes.draw do
 
   get 'about', to: 'pages#about'
   resources :parks, only: [:index, :show]
+  resources :activities, only: [:index, :show]
+  resources :topics, only: [:index, :show]
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

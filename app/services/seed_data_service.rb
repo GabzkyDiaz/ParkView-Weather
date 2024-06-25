@@ -11,7 +11,24 @@ class SeedDataService
   end
 
   def fetch_parks
-    response = self.class.get("/parks", query: { api_key: @nps_api_key, limit: 210 }) # Increase the limit if needed
+    topics = ['Waterfalls', 'Wetlands', 'Glaciers', 'Forest and Woodlands']
+    activities = ['Arts and Culture', 'Astronomy', 'Camping', 'Boating']
+
+    topics.each { |topic| fetch_parks_by_topic(topic) }
+    activities.each { |activity| fetch_parks_by_activity(activity) }
+  end
+
+  def fetch_parks_by_topic(topic)
+    response = self.class.get("/parks", query: { api_key: @nps_api_key, q: topic, limit: 30 })
+    process_parks_response(response, :topic, topic)
+  end
+
+  def fetch_parks_by_activity(activity)
+    response = self.class.get("/parks", query: { api_key: @nps_api_key, q: activity, limit: 30 })
+    process_parks_response(response, :activity, activity)
+  end
+
+  def process_parks_response(response, type, name)
     if response.success?
       response.parsed_response['data'].each do |park_data|
         latitude = park_data['latitude']
@@ -37,12 +54,21 @@ class SeedDataService
 
           # Ensure map is created for each park
           fetch_map(park)
+
+          # Associate the park with the activity or topic
+          if type == :topic
+            topic = Topic.find_or_create_by!(name: name)
+            ParkTopic.find_or_create_by!(park: park, topic: topic)
+          else
+            activity = Activity.find_or_create_by!(name: name)
+            ParkActivity.find_or_create_by!(park: park, activity: activity)
+          end
         else
           puts "Latitude or longitude missing for park: #{park_data['fullName']}"
         end
       end
     else
-      puts "Failed to fetch parks data: #{response.code}"
+      puts "Failed to fetch parks data for #{type}: #{name}, response code: #{response.code}"
     end
   end
 
