@@ -6,14 +6,14 @@ class ParksController < ApplicationController
     @parks = Park.all
 
     if search_query.present?
-      @parks = @parks.where('LOWER(name) LIKE ? OR LOWER(full_state_names) LIKE ?', "%#{search_query}%", "%#{search_query}%")
+      @parks = @parks.where('LOWER(parks.name) LIKE ? OR LOWER(parks.full_state_names) LIKE ?', "%#{search_query}%", "%#{search_query}%")
     end
 
     if params[:activity_id].present?
       @parks = @parks.joins(:activities).where('activities.id = ?', params[:activity_id])
     end
 
-    @parks = @parks.page(params[:page])
+    @parks = @parks.distinct.page(params[:page])
   end
 
   def show
