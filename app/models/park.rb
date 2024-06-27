@@ -1,5 +1,7 @@
 class Park < ApplicationRecord
   has_many :images, dependent: :destroy
+  accepts_nested_attributes_for :images, allow_destroy: true
+
   has_many :weathers, dependent: :destroy
   has_one :map, dependent: :destroy
   has_many :park_activities, dependent: :destroy
