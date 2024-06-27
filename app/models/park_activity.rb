@@ -4,6 +4,10 @@ class ParkActivity < ApplicationRecord
     ["activity_id", "created_at", "id", "id_value", "park_id", "updated_at"]
   end
 
+  def self.ransackable_associations(auth_object = nil)
+    ["activity", "park"]
+  end
+
   belongs_to :park
   belongs_to :activity
 

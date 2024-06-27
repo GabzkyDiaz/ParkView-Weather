@@ -5,6 +5,10 @@ class Map < ApplicationRecord
     ["created_at", "id", "id_value", "latitude", "longitude", "map_url", "park_id", "updated_at"]
   end
 
+  def self.ransackable_associations(auth_object = nil)
+    ["park"]
+  end
+
   validates :map_url, presence: true
   validates :latitude, presence: true
   validates :longitude, presence: true
