@@ -16,7 +16,6 @@ ActiveAdmin.register Park do
 
   form do |f|
     f.semantic_errors
-
     f.inputs 'Park Details' do
       f.input :name
       f.input :location
@@ -27,7 +26,6 @@ ActiveAdmin.register Park do
         img_f.input :photo, as: :file, hint: img_f.object.photo.attached? ? image_tag(url_for(img_f.object.photo.variant(resize: "100x100"))) : content_tag(:span, "No photo yet")
       end
     end
-
     f.actions
   end
 
@@ -35,7 +33,6 @@ ActiveAdmin.register Park do
     attributes_table do
       row :name
       row :location
-
       row :images do |park|
         park.images.map do |image|
           image_tag(url_for(image.photo.variant(resize: "100x100"))) if image.photo.attached?

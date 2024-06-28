@@ -5,9 +5,11 @@
 <h2 class="text-2xl font-semibold mb-4">Images</h2>
 <ul class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
   <% @park.images.each do |image| %>
-    <li class="flex justify-center">
-      <%= image_tag image.url, class: "w-72 h-72 object-cover rounded-md shadow" %>
-    </li>
+    <% if image.photo.attached? %>
+      <li class="flex justify-center">
+        <%= image_tag url_for(image.photo), class: "w-72 h-72 object-cover rounded-md shadow" %>
+      </li>
+    <% end %>
   <% end %>
 </ul>
 
@@ -20,7 +22,7 @@
 
 <h2 class="text-2xl font-semibold mb-4">Map</h2>
 <div class="mb-6 flex justify-center">
-  <%= image_tag @park.map.map_url, class: "w-96 h-72 object-cover rounded-md shadow" %>
+  <%= image_tag url_for(@park.map.map_url), class: "w-96 h-72 object-cover rounded-md shadow" %>
 </div>
 
 <h2 class="text-2xl font-semibold mb-4">Activities</h2>
@@ -36,6 +38,5 @@
     <li class="text-lg text-gray-600"><%= topic.name %></li>
   <% end %>
 </ul>
-
 
 <%= link_to 'Back', parks_path, class: "inline-block bg-gray-600 text-white py-2 px-4 rounded-md shadow mt-4 hover:bg-gray-700" %>
