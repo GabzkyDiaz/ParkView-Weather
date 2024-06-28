@@ -1,6 +1,6 @@
-<h1>Activities</h1>
-<ul>
+<h1 class="text-4xl font-bold mb-4">Activities</h1>
+<ul class="list-disc list-inside">
   <% @activities.each do |activity| %>
-    <li><%= link_to activity.name, activity_path(activity) %></li>
+    <li class="mb-2"><%= link_to activity.name, activity_path(activity), class: "text-indigo-600 hover:underline" %></li>
   <% end %>
 </ul>

@@ -1,7 +1,7 @@
-<h1>Parks with <%= @activity.name %> Activity</h1>
-<%= paginate @parks %>
-<ul>
+<h1 class="text-4xl font-bold mb-4">Parks with <%= @activity.name %> Activity</h1>
+<%= paginate @parks, class: "mb-4" %>
+<ul class="list-disc list-inside">
   <% @parks.each do |park| %>
-    <li><%= link_to park.name, park_path(park) %></li>
+    <li class="mb-2"><%= link_to park.name, park_path(park), class: "text-indigo-600 hover:underline" %></li>
   <% end %>
 </ul>
