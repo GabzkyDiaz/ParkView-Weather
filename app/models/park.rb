@@ -12,6 +12,8 @@ class Park < ApplicationRecord
   validates :name, presence: true
   validates :location, presence: true
 
+  after_update :purge_deleted_images
+
   def self.ransackable_associations(auth_object = nil)
     ["activities", "images", "map", "park_activities", "park_topics", "topics", "weathers"]
   end
@@ -81,5 +83,15 @@ class Park < ApplicationRecord
 
   def set_full_state_names
     self.full_state_names = states.split(',').map { |abbr| Park.state_full_name(abbr) }.join(', ')
+  end
+
+  private
+
+  def purge_deleted_images
+    images.each do |image|
+      if image.marked_for_destruction?
+        image.photo.purge
+      end
+    end
   end
 end

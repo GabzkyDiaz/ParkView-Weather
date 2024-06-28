@@ -22,8 +22,12 @@ ActiveAdmin.register Park do
     end
 
     f.inputs 'Images' do
-      f.has_many :images, allow_destroy: true do |img_f|
-        img_f.input :photo, as: :file, hint: img_f.object.photo.attached? ? image_tag(url_for(img_f.object.photo.variant(resize: "100x100"))) : content_tag(:span, "No photo yet")
+      f.has_many :images, allow_destroy: true, new_record: true do |img_f|
+        if img_f.object.persisted? && img_f.object.photo.attached?
+          img_f.input :photo, as: :file, hint: image_tag(url_for(img_f.object.photo.variant(resize: "100x100")))
+        else
+          img_f.input :photo, as: :file, hint: content_tag(:span, "No photo yet")
+        end
       end
     end
     f.actions
@@ -43,16 +47,31 @@ ActiveAdmin.register Park do
 
   controller do
     def update
+      Rails.logger.debug("Update params: #{params.inspect}")
+
+      # Custom logic for deleting images
       if params[:park][:images_attributes]
         params[:park][:images_attributes].each do |key, value|
           if value[:_destroy] == "1" && !value[:id].blank?
-            image = Image.find(value[:id])
-            image.photo.purge
-            image.destroy
+            begin
+              image = Image.find(value[:id])
+              image.photo.purge
+              image.destroy
+              params[:park][:images_attributes].delete(key)
+            rescue ActiveRecord::RecordNotFound => e
+              Rails.logger.error "Image with ID #{value[:id]} not found for Park with ID #{params[:id]}"
+            end
           end
         end
       end
-      super
+
+      # Find and update the park
+      @park = Park.find(params[:id])
+      if @park.update(permitted_params[:park])
+        redirect_to admin_park_path(@park), notice: "Park was successfully updated."
+      else
+        render :edit
+      end
     end
   end
 end
